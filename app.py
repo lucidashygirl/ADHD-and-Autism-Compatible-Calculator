@@ -12,12 +12,12 @@ def resource_path(relative_path):
 
 # For the sound effects ;)
 py.init()
-btnPress = py.mixer.Sound(resource_path("sfx/buttonPress.mp3"))
-expl = py.mixer.Sound(resource_path("sfx/explosion.mp3"))
-crrct = py.mixer.Sound(resource_path("sfx/correctSfx.mp3"))
-inCrrct = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
+buttonPress = py.mixer.Sound(resource_path("sfx/buttonPress.mp3"))
+explodeode = py.mixer.Sound(resource_path("sfx/explodeosion.mp3"))
+correct = py.mixer.Sound(resource_path("sfx/correctSfx.mp3"))
+incorrect = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
 delete = py.mixer.Sound(resource_path("sfx/delete.mp3"))
-bye = py.mixer.Sound(resource_path("sfx/closing.mp3"))
+close = py.mixer.Sound(resource_path("sfx/closing.mp3"))
 
 class Calculator:
     def __init__(self, master):
@@ -92,7 +92,7 @@ class Calculator:
         self.watermark.grid(row=7, column=0, columnspan=2, padx=5, pady=5, sticky="sw")
 
     def number(self, value):  # Add number/operator to expression
-        py.mixer.Sound.play(btnPress)
+        py.mixer.Sound.play(buttonPress)
         if self.text_result == "0":
             self.text_result = value
         else:
@@ -110,7 +110,7 @@ class Calculator:
 
     def onClosing(self):
         py.mixer.music.stop()
-        py.mixer.Sound.play(bye)
+        py.mixer.Sound.play(close)
         self.master.withdraw() # Hide window
         time.sleep(2)
         self.master.destroy()
@@ -118,9 +118,9 @@ class Calculator:
     def calculate(self):  # Perform calculation
         try:
             self.text_result = str(eval(self.text_result))  # Evaluate the expression
-            py.mixer.Sound.play(crrct)
+            py.mixer.Sound.play(correct)
         except Exception: # Exception
-            py.mixer.Sound.play(inCrrct)
+            py.mixer.Sound.play(incorrect)
             self.text_result = "Error"
             self.result.config(text=self.text_result)
             self.shake_window(shakes=45, distance=10, interval=15)
@@ -128,7 +128,7 @@ class Calculator:
         self.result.config(text=self.text_result)
 
     def clear(self):
-        py.mixer.Sound.play(expl)
+        py.mixer.Sound.play(explode)
         self.text_result = "0"  # Clear
         self.result.config(text=self.text_result)
         self.shake_window(shakes=45, distance=25, interval=2)
