@@ -12,22 +12,28 @@ def resource_path(relative_path):
 
 # For the sound effects ;)
 py.init()
-btnPress = py.mixer.Sound(resource_path("sfx/buttonPress.mp3"))
-expl = py.mixer.Sound(resource_path("sfx/explosion.mp3"))
-crrct = py.mixer.Sound(resource_path("sfx/correctSfx.mp3"))
-inCrrct = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
+buttonPress = py.mixer.Sound(resource_path("sfx/buttonPress.mp3"))
+explode = py.mixer.Sound(resource_path("sfx/explosion.mp3"))
+correct = py.mixer.Sound(resource_path("sfx/correctSfx.mp3"))
+incorrect = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
 delete = py.mixer.Sound(resource_path("sfx/delete.mp3"))
-bye = py.mixer.Sound(resource_path("sfx/closing.mp3"))
+close = py.mixer.Sound(resource_path("sfx/closing.mp3"))
+
+# Fixed height for titlebar
+linux_titlebar_height = 36
 
 class Calculator:
     def __init__(self, master):
         self.master = master
         self.master.title("ADHD & Autism Compatible Calculator")
         self.master.resizable(False, False)
-        self.master.geometry("400x610")
         self.master.configure(bg="mediumpurple2")
         self.master.protocol("WM_DELETE_WINDOW", self.onClosing)
-        self.master.iconbitmap(resource_path("sfx/epicLogo.ico"))
+        if os.name == 'nt':
+            self.master.geometry("400x610")
+            self.master.iconbitmap(resource_path("gfx/epicLogo.ico"))
+        else:
+            self.master.geometry("400x720")
 
         # For shake
         self.doDisable = True
@@ -92,7 +98,7 @@ class Calculator:
         self.watermark.grid(row=7, column=0, columnspan=2, padx=5, pady=5, sticky="sw")
 
     def number(self, value):  # Add number/operator to expression
-        py.mixer.Sound.play(btnPress)
+        py.mixer.Sound.play(buttonPress)
         if self.text_result == "0":
             self.text_result = value
         else:
@@ -110,7 +116,7 @@ class Calculator:
 
     def onClosing(self):
         py.mixer.music.stop()
-        py.mixer.Sound.play(bye)
+        py.mixer.Sound.play(close)
         self.master.withdraw() # Hide window
         time.sleep(2)
         self.master.destroy()
@@ -118,9 +124,9 @@ class Calculator:
     def calculate(self):  # Perform calculation
         try:
             self.text_result = str(eval(self.text_result))  # Evaluate the expression
-            py.mixer.Sound.play(crrct)
+            py.mixer.Sound.play(correct)
         except Exception: # Exception
-            py.mixer.Sound.play(inCrrct)
+            py.mixer.Sound.play(incorrect)
             self.text_result = "Error"
             self.result.config(text=self.text_result)
             self.shake_window(shakes=45, distance=10, interval=15)
@@ -128,7 +134,7 @@ class Calculator:
         self.result.config(text=self.text_result)
 
     def clear(self):
-        py.mixer.Sound.play(expl)
+        py.mixer.Sound.play(explode)
         self.text_result = "0"  # Clear
         self.result.config(text=self.text_result)
         self.shake_window(shakes=45, distance=25, interval=2)
@@ -136,13 +142,16 @@ class Calculator:
     def shake_window(self, shakes=0, distance=0, interval=0):
         """Makes the window shake by moving it back and forth."""
         # Disable the shake button while the window shakes
-        if self.doDisable == True:
+        if self.doDisable:
             self.btn_equals.config(state=tk.DISABLED, bg='gray')
             self.btn_clear.config(state=tk.DISABLED, bg='gray')
         self.doDisable = True
         
         original_x = self.master.winfo_x()  # Get the current x-coordinate of the window
         original_y = self.master.winfo_y()  # Get the current y-coordinate of the window
+        
+        if os.name != "nt":
+            original_y -= linux_titlebar_height
         
         for i in range(shakes):
             if i % 2 == 0:
@@ -160,7 +169,7 @@ class Calculator:
         self.btn_clear.config(state=tk.NORMAL, bg='red')
 
     def toggleMusic(self):
-        if py.mixer_music.get_busy() == True:
+        if py.mixer_music.get_busy():
             py.mixer.music.stop()
         else:
             py.mixer.music.play(-1)
