@@ -1,8 +1,13 @@
-import tkinter as tk
+import platform
 import pygame as py
 import time
 import os
 import sys
+
+if platform.system() == 'Linux':
+    import tk
+else:
+    import tkinter as tk
 
 # I hate you PyInstaller
 def resource_path(relative_path):
