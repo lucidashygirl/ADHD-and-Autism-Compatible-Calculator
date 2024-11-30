@@ -27,7 +27,8 @@ class Calculator:
         self.master.geometry("400x610")
         self.master.configure(bg="mediumpurple2")
         self.master.protocol("WM_DELETE_WINDOW", self.onClosing)
-        self.master.iconbitmap(resource_path("gfx/epicLogo.ico"))
+        if os.name == 'nt':
+            self.master.iconbitmap(resource_path("gfx/epicLogo.ico"))
 
         # For shake
         self.doDisable = True
