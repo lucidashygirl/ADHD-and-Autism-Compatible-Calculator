@@ -3,7 +3,6 @@ import pygame as py
 import time
 import os
 import sys
-
 # I hate you PyInstaller
 def resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
@@ -37,24 +36,19 @@ class Calculator:
 
         # For shake
         self.doDisable = True
-
         # epic bg music
         py.mixer.music.load(resource_path("sfx/bg music.mp3"))
         py.mixer.music.play(-1)
-
         # Show answer
         self.text_result = "0"
         self.result = tk.Label(master, text=self.text_result, font=("bahnschrift", 24), anchor="e", bg="white", relief="sunken")
         self.result.pack(padx=10, pady=10, fill="x")
-
         # Grid system
         button_frame = tk.Frame(master, bg="mediumpurple2")  # Add a frame to hold buttons
         button_frame.pack(pady=20)
-
         # Button size
         button_width = 8
         button_height = 3
-
         # Number Buttons
         btn7 = tk.Button(button_frame, text="7", width=button_width, height=button_height, bg='chocolate1', command=lambda: self.number("7"))
         btn7.grid(row=0, column=0, padx=5, pady=5)
@@ -76,7 +70,6 @@ class Calculator:
         btn3.grid(row=2, column=2, padx=5, pady=5)
         btn0 = tk.Button(button_frame, text="0", width=button_width, height=button_height, bg='chocolate1',command=lambda: self.number("0"))
         btn0.grid(row=3, column=1, padx=5, pady=5)
-
         # Operation Buttons
         btn_add = tk.Button(button_frame, text="+", width=button_width, height=button_height, bg='chocolate1',command=lambda: self.number("+"))
         btn_add.grid(row=4, column=0, padx=5, pady=5)
@@ -94,8 +87,9 @@ class Calculator:
         self.btn_backspace.grid(row=6, column=0, columnspan=5, padx=5, pady=5, sticky="se")
         self.btn_music = tk.Button(button_frame, text="Toggle Music", font=("TkDefaultFont", 7),  width=9, height=2, bg='orange',command=self.toggleMusic)
         self.btn_music.grid(row=7, column=2, columnspan=1, padx=5, pady=5, sticky="se")
-        self.watermark = tk.Label(button_frame, text="Made by RileyIsPurple!", font=("TkDefaultFont", 8),bg="mediumpurple2")
-        self.watermark.grid(row=7, column=0, columnspan=2, padx=5, pady=5, sticky="sw")
+        self.watermark = tk.Label(button_frame, text="Made by RileyIsPurple! \n Thanks for the help lucidashygirl!", font=("TkDefaultFont", 7),bg="mediumpurple2")
+        self.watermark.grid(row=7, column=0, columnspan=2, padx=2, pady=5, sticky="sw")
+        
 
     def number(self, value):  # Add number/operator to expression
         py.mixer.Sound.play(buttonPress)
@@ -104,7 +98,6 @@ class Calculator:
         else:
             self.text_result += value
         self.result.config(text=self.text_result)
-
     def removeNumber(self):
         py.mixer.Sound.play(delete)
         self.text_result = self.text_result[:-1] # This slices/backspaces a character from string
@@ -146,13 +139,13 @@ class Calculator:
             self.btn_equals.config(state=tk.DISABLED, bg='gray')
             self.btn_clear.config(state=tk.DISABLED, bg='gray')
         self.doDisable = True
-        
+
         original_x = self.master.winfo_x()  # Get the current x-coordinate of the window
         original_y = self.master.winfo_y()  # Get the current y-coordinate of the window
-        
+
         if os.name != "nt":
             original_y -= linux_titlebar_height
-        
+
         for i in range(shakes):
             if i % 2 == 0:
                 self.master.geometry(f'+{original_x + distance}+{original_y}')
@@ -160,10 +153,8 @@ class Calculator:
                 self.master.geometry(f'+{original_x - distance}+{original_y}')
             self.master.update()  # Update the window to reflect the new position
             self.master.after(interval)  # Wait before moving again
-
         # Return the window to its original position after shaking
         self.master.geometry(f'+{original_x}+{original_y}')
-
         # Re-enable the button after a short delay (interval * shakes + some buffer)
         self.btn_equals.config(state=tk.NORMAL, bg='OliveDrab1')
         self.btn_clear.config(state=tk.NORMAL, bg='red')
@@ -174,8 +165,6 @@ class Calculator:
         else:
             py.mixer.music.play(-1)
         
-
-
 if __name__ == "__main__":
     window = tk.Tk()
     app = Calculator(window)
