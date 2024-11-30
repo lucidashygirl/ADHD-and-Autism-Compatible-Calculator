@@ -19,6 +19,9 @@ incorrect = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
 delete = py.mixer.Sound(resource_path("sfx/delete.mp3"))
 close = py.mixer.Sound(resource_path("sfx/closing.mp3"))
 
+# Fixed height for titlebar
+linux_titlebar_height = 36
+
 class Calculator:
     def __init__(self, master):
         self.master = master
@@ -146,6 +149,9 @@ class Calculator:
         
         original_x = self.master.winfo_x()  # Get the current x-coordinate of the window
         original_y = self.master.winfo_y()  # Get the current y-coordinate of the window
+        
+        if os.name != "nt":
+            original_y -= linux_titlebar_height
         
         for i in range(shakes):
             if i % 2 == 0:
