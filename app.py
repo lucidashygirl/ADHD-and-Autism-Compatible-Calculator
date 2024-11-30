@@ -137,7 +137,7 @@ class Calculator:
     def shake_window(self, shakes=0, distance=0, interval=0):
         """Makes the window shake by moving it back and forth."""
         # Disable the shake button while the window shakes
-        if self.doDisable == True:
+        if self.doDisable:
             self.btn_equals.config(state=tk.DISABLED, bg='gray')
             self.btn_clear.config(state=tk.DISABLED, bg='gray')
         self.doDisable = True
@@ -161,7 +161,7 @@ class Calculator:
         self.btn_clear.config(state=tk.NORMAL, bg='red')
 
     def toggleMusic(self):
-        if py.mixer_music.get_busy() == True:
+        if py.mixer_music.get_busy():
             py.mixer.music.stop()
         else:
             py.mixer.music.play(-1)
