@@ -11,7 +11,8 @@ Now you can calculate things, without getting bored.
 
 Look at this screenshot!!!
 
-![image](https://github.com/user-attachments/assets/b9cd2a3b-56b6-42f7-854b-7317c3a54098)
+![image](https://github.com/user-attachments/assets/8c867637-d21e-4ac0-a42e-9c885a2adcb7)
 
 What are you waiting for?!?!?!!??
 DOWNLOAD IT NOW TODAY!11!!1!11
+(Thanks for the help on optimization and Linux bug fixing, lucidashygirl!!)
