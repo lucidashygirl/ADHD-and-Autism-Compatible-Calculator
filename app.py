@@ -13,7 +13,7 @@ def resource_path(relative_path):
 # For the sound effects ;)
 py.init()
 buttonPress = py.mixer.Sound(resource_path("sfx/buttonPress.mp3"))
-explodeode = py.mixer.Sound(resource_path("sfx/explodeosion.mp3"))
+explode = py.mixer.Sound(resource_path("sfx/explosion.mp3"))
 correct = py.mixer.Sound(resource_path("sfx/correctSfx.mp3"))
 incorrect = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
 delete = py.mixer.Sound(resource_path("sfx/delete.mp3"))
