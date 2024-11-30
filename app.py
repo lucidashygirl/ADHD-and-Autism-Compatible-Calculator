@@ -24,11 +24,13 @@ class Calculator:
         self.master = master
         self.master.title("ADHD & Autism Compatible Calculator")
         self.master.resizable(False, False)
-        self.master.geometry("400x610")
         self.master.configure(bg="mediumpurple2")
         self.master.protocol("WM_DELETE_WINDOW", self.onClosing)
         if os.name == 'nt':
+            self.master.geometry("400x610")
             self.master.iconbitmap(resource_path("gfx/epicLogo.ico"))
+        else:
+            self.master.geometry("400x720")
 
         # For shake
         self.doDisable = True
