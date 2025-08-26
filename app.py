@@ -15,6 +15,7 @@ buttonPress = py.mixer.Sound(resource_path("sfx/buttonPress.mp3"))
 explode = py.mixer.Sound(resource_path("sfx/explosion.mp3"))
 correct = py.mixer.Sound(resource_path("sfx/correctSfx.mp3"))
 incorrect = py.mixer.Sound(resource_path("sfx/incorrectSfx.mp3"))
+splat = py.mixer.Sound(resource_path("sfx/21.mp3"))
 delete = py.mixer.Sound(resource_path("sfx/delete.mp3"))
 close = py.mixer.Sound(resource_path("sfx/closing.mp3"))
 
@@ -115,6 +116,10 @@ class Calculator:
         self.master.destroy()
 
     def calculate(self):  # Perform calculation
+        if self.text_result == "9+10":
+            self.result.config(text=21)
+            py.mixer.Sound.play(splat)
+            return
         try:
             self.text_result = str(eval(self.text_result))  # Evaluate the expression
             py.mixer.Sound.play(correct)
